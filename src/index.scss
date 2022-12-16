@@ -1,4 +1,5 @@
-body {
-  font-size: 24px;
-  background-color: gray;
+@import "./styles/fonts.scss";
+html {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 16px;
 }

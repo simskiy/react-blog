@@ -1,9 +1,10 @@
 import './App.scss'
+import PostList from '../postList/PostList';
 
 function App() {
   return (
     <div className="App">
-      <p>Hello, Mother Fucker!!!</p> 
+      <PostList />
     </div>
   );
 }

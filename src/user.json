@@ -1,0 +1,8 @@
+{
+  "user": {
+    "username": "sim",
+    "email": "mail@mail.ru",
+    "password": "123"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWI4N2MxMjA3NTk0MWIwMGU0NzlhNiIsInVzZXJuYW1lIjoic2ltIiwiZXhwIjoxNjc2MzIxMjE3LCJpYXQiOjE2NzExMzcyMTd9.LpEOMnPurESCZuVvNxfMuNIKmDIQjY5nktfz23zbbh4"
+}

@@ -1,0 +1,95 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/global.scss";
+
+.post {
+  @include box-shadow;
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  row-gap: 5px;
+  grid-template-areas:
+    "header author"
+    "tags author"
+    "description author"
+    "text text";
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  & .title {
+    font-size: 1.25rem;
+    color: $info-color;
+    margin: 0;
+    height: 28px;
+  }
+  & .like {
+    display: block;
+    width: 35px;
+    font-size: 0.75rem;
+    text-align: right;
+    color: $text-color;
+    margin-left: 12px;
+    font-weight: 400;
+    background: url("like.svg") left center/ 16px 14px no-repeat;
+  }
+}
+
+.author {
+  display: grid;
+  grid-area: author;
+  grid-template-areas: "name img" "date img";
+  justify-items: end;
+  align-content: center;
+
+  & .img {
+    grid-area: img;
+  }
+  & .name {
+    grid-area: name;
+    font-size: 1.25rem;
+    color: $heading-color;
+  }
+  & .date {
+    grid-area: date;
+    font-size: 0.75rem;
+    color: $text-color-secondary;
+  }
+}
+
+.tags {
+  grid-area: tags;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+
+  & .tag {
+    width: 38px;
+    height: 20px;
+    font-size: 0.75rem;
+    color: $text-color-secondary;
+    font-weight: 400;
+    border: 1px solid $text-color-secondary;
+    text-align: center;
+    border-radius: 2px;
+  }
+}
+
+.description {
+  grid-area: description;
+  font-size: 0.75rem;
+  line-height: 22px;
+  color: $text-color;
+  margin: 0;
+  margin-top: 15px;
+}
+
+.text {
+  grid-area: text;
+  font-size: 20px;
+  color: $text-color;
+}
