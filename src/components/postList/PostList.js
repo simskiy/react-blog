@@ -1,54 +1,21 @@
 import { List } from "antd"
-import Post from "../post/Post";
-// @ts-ignore
-import styles from './postList.module.scss';
+import styles from './postList.module.scss'
+import Post from "../post/Post"
 
-
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-];
-
-export default function PostList() {
-  return <List
-          itemLayout="horizontal"
-          dataSource={data}
-          className={styles.list}
-          pagination={{
-            onChange: (page) => console.log(page),
-            pageSize: 5,
-          }}
-          renderItem = {(item) => (
-            <List.Item>
-              <Post
-              />
-            </List.Item>  
-          )} 
-         />
+const PostList = ({data}) => {
+  return (
+    <List
+        itemLayout="horizontal"
+        dataSource={data.articles}
+        className={styles.list}
+        split={false}
+        renderItem = {(item) => {
+          return (<List.Item key={item.slug} className={styles.item} >
+            <Post post={item} />
+          </List.Item>)  
+        }} 
+      />
+  )
 }
 
+export default PostList
