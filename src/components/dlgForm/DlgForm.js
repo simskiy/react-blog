@@ -24,7 +24,7 @@ const DlgForm = ({children}) => {
 
   const {
     register,
-    formState: {errors},
+    formState: {errors, isValid},
     handleSubmit,
   } = useForm({mode: "onBlur"})
 
@@ -37,7 +37,7 @@ const DlgForm = ({children}) => {
   })
   
   return (
-    <DlgFormProvider value={{state, dispatch, register, errors}}>
+    <DlgFormProvider value={{state, dispatch, register, errors, isValid}}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {children}
       </Form>

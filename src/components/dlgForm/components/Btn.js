@@ -22,16 +22,22 @@ const Button = styled.button`
   &:active {
     transform: translate(-2px, -2px);
   }
+  &:disabled {
+    background-color: ${color.inputBorder};
+    &:active {
+      transform: none;
+    }
+  }
 `
 
 const Btn = ({label}) => {
-  const {dispatch} = useDlgFormContext()
+  const {dispatch, isValid} = useDlgFormContext()
   const onClickSubmit = () => {
     dispatch({type: 'onSubmit'})
   }
 
   return (
-    <Button type='submit' onClick={onClickSubmit}>{label}</Button>)
+    <Button type='submit' disabled = {!isValid} onClick={onClickSubmit}>{label}</Button>)
 }
 
 export default Btn
