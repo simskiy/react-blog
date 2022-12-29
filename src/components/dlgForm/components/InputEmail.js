@@ -12,8 +12,8 @@ const InputEmail = () => {
   const validate = {...register('emailInput', {
       required: 'Поле обязательно к заполнению',
       pattern: {
-        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-        message: 'Не корректное имя email'
+        value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
+        message: 'Не корректный email'
       }
     })
   }

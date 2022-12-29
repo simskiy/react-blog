@@ -3,7 +3,7 @@ import Input from "./Input";
 
 const InputUsername = () => {
   const {state, dispatch, register, errors} = useDlgFormContext()
-  const msg = 'Короткое имя. Длина имени должна быть от 3 до 20 символов'
+  const msg = 'Длина имени должна быть от 3 до 20 символов (включительно)'
   
   const onChangeInputUsername = (value) => {
     dispatch({type: 'onChangeUsername', payload: {username: value}})
@@ -18,6 +18,10 @@ const InputUsername = () => {
       maxLength: {
         value: 20,
         message: msg
+      },
+      pattern: {
+        value: /^[a-z][a-z0-9]*$/,
+        message: 'Нужно использовать только английские буквы в нижнем регистре',
       }
     })
   }
