@@ -1,6 +1,7 @@
 import {useDlgFormContext} from '../state/context'
 import styled from 'styled-components';
 import { color } from '../../../styles/global';
+import { useController } from 'react-hook-form';
 
 const Check = styled.label`
   display: flex;
@@ -17,15 +18,31 @@ const Check = styled.label`
 `
 
 const AgreeCheck = () => {
-  const {state, dispatch} = useDlgFormContext()
+  const {state, dispatch, control} = useDlgFormContext()
+  const {field: {onChange}} = useController({
+    control,
+    name: 'agree',
+    rules: {
+      validate: {
+        require: (value) => value
+      }
+    }
+  })
 
   const onAgreeCheck = () => {
-    dispatch({type: 'onCheckAgree'})    
+    dispatch({type: 'onCheckAgree'})
   }
 
   return (
     <Check>
-      <input type='checkbox' checked={state.check} onChange={onAgreeCheck}/>
+      <input
+        type='checkbox' 
+        checked={state.check} 
+        onChange={(e) => {
+          onAgreeCheck()
+          onChange(e.target.checked)
+        }}
+      />
       <span>I agree to the processing of my personal information</span>
     </Check>
   )

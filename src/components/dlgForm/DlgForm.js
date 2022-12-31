@@ -26,7 +26,7 @@ const DlgForm = ({children}) => {
     formState: {isValid},
     handleSubmit,
     control
-  } = useForm({mode: "onBlur"})
+  } = useForm({mode: "onChange"})
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data))
