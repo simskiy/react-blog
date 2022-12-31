@@ -2,29 +2,26 @@ import {useDlgFormContext} from '../state/context'
 import Input from './Input'
 
 const InputRepeatPassword = () => {
-  const {state, dispatch, register, errors} = useDlgFormContext()
-  const msg = 'Пароль должен быть от 6 до 40 символов (включительно)'
+  const {state, dispatch, control} = useDlgFormContext()
 
   const onChangeInputRepeatPassword = (value) => {
     dispatch({type: 'onChangeRepeatPaswword', payload: {repeatPassword: value}})
   }
-  const validate = {...register('passwordInput', {
-      required: 'Поле обязательно к заполнению',
-      minLength: {
-        value: 6,
-        message: msg
-      },
-      maxLength: {
-        value: 40,
-        message: msg
+
+  const rules = {
+    required: 'Поле обязательно к заполнению',
+    validate: {
+      required: (value) => {
+        if (value !== state.password) return 'Пароли не совпадают'
       }
-    })
+    }
   }
 
   return (
     <Input 
-      validate={validate}
-      errorsMsg={errors?.passwordInput?.message}
+      control={control}
+      name='inputRepeatPassword'
+      rules={rules}
       value={state.repeatPassword}
       label='Repeat Password'
       type='password'

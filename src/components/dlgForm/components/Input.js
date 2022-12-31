@@ -43,34 +43,30 @@ const Input = (props) => {
     type,
     placeholder,
     rules
-    // validate,
-    // errorsMsg
   } = props
 
-  const {field: {onChange}, fieldState: {error}} = useController({
+  const {field: {onChange, onBlur}, fieldState} = useController({
     control,
     name,
     rules
   })
-
   return (
-    <InputWrapper>
+    <InputWrapper error={fieldState?.error}>
       <label>
         {label}
         <input
-          // {...validate}
           type={type}
           placeholder={placeholder}
           autoComplete={autocomplete}
           value={value || ''}
           onChange={(event) => {
-            console.log(error, value)
+            onChange(event.target.value)
+            onBlur(event.target.value)
             onChangeInput(event.target.value)
-            onChange(value)
           }}
-        />        
+        />
       </label>
-      <ErrorsMsg msg={error?.message}/> 
+      <ErrorsMsg msg={fieldState?.error?.message}/> 
     </InputWrapper>
   )
 }

@@ -10,10 +10,10 @@ const CreateAccountPage = () => {
       {/* <CreateAccountDlg /> */}
       <DlgForm value='hello mother fucker'>
         <DlgForm.Frame title='Create New Account'>
-          {/* <DlgForm.InputUsername /> */}
+          <DlgForm.InputUsername />
           <DlgForm.InputEmail />
-          {/* <DlgForm.InputPassword /> */}
-          {/* <DlgForm.InputRepeatPassword /> */}
+          <DlgForm.InputPassword />
+          <DlgForm.InputRepeatPassword />
           {/* <DlgForm.InputNewPassword /> */}
           {/* <DlgForm.InputAvatar /> */}
         </DlgForm.Frame>

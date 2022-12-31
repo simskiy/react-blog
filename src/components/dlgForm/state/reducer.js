@@ -30,6 +30,7 @@ export function reducer (state, action) {
     }
     case 'onSubmit': {
       // console.log(state)
+      break;
     }
     default: return state
   }

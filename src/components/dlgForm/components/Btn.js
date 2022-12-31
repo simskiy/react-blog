@@ -37,8 +37,7 @@ const Btn = ({label}) => {
   }
 
   return (
-    // <Button type='submit' disabled = {!isValid} onClick={onClickSubmit}>{label}</Button>
-    <Button onClick={onClickSubmit} type='submit'>{label}</Button>
+    <Button type='submit' disabled = {!isValid} onClick={onClickSubmit}>{label}</Button>
   )
 }
 
