@@ -26,7 +26,8 @@ const DlgForm = ({children}) => {
     register,
     formState: {errors, isValid},
     handleSubmit,
-  } = useForm({mode: "onBlur"})
+    control
+  } = useForm({mode: "onChange"})
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data))
@@ -35,10 +36,9 @@ const DlgForm = ({children}) => {
   const [state, dispatch] = useReducer(reducer, {
     check: true
   })
-  
   return (
-    <DlgFormProvider value={{state, dispatch, register, errors, isValid}}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+    <DlgFormProvider value={{state, dispatch, register, errors, isValid, control}}>
+      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         {children}
       </Form>
     </DlgFormProvider>

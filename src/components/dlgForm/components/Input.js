@@ -2,6 +2,8 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { color } from '../../../styles/global'
+import ErrorsMsg from './ErrorsMsg';
+import { useController } from 'react-hook-form';
 
 const InputWrapper = styled.div`
 & label {
@@ -30,37 +32,45 @@ const InputWrapper = styled.div`
 }
 `;
 
-const Error = styled.span`
-  color: ${color.error};
-  font-size: 14px;
-  font-weight: 400;
-`
-
 const Input = (props) => {
-  const {
-    label, 
-    type, 
-    placeholder, 
+  const {     
     autocomplete = 'off',
+    control,
+    name,
+    label,
     value,
     onChangeInput,
-    validate,
-    errorsMsg
+    type,
+    placeholder,
+    rules
+    // validate,
+    // errorsMsg
   } = props
+
+  const {field: {onChange}, fieldState: {error}} = useController({
+    control,
+    name,
+    rules
+  })
+
   return (
-    <InputWrapper error={errorsMsg}>
+    <InputWrapper>
       <label>
         {label}
         <input
-          {...validate}
+          // {...validate}
           type={type}
           placeholder={placeholder}
           autoComplete={autocomplete}
           value={value || ''}
-          onChange={(event) => onChangeInput(event.target.value)}
+          onChange={(event) => {
+            console.log(error, value)
+            onChangeInput(event.target.value)
+            onChange(value)
+          }}
         />        
       </label>
-      {errorsMsg?<Error>{errorsMsg}</Error>:null }
+      <ErrorsMsg msg={error?.message}/> 
     </InputWrapper>
   )
 }
