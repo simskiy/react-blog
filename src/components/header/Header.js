@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <p className={styles.title}>Realworld Blog</p>
-      <button>Sign In</button>
+      <Link to='/login'><button>Sign In</button></Link>
       <Link to='/create'><button>Sign Up</button></Link>
       <button>CreateArticle</button>
       <div>

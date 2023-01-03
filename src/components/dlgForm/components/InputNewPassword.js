@@ -27,7 +27,7 @@ const InputNewPassword = () => {
       name='inputNewPassword'
       rules={rules}
       label='New password'
-      value={state.newPassword}
+      value={state?.newPassword}
       type='password'
       onChangeInput={onChangeNewPassword}
       placeholder='New password'

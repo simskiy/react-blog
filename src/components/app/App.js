@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styles from './app.module.scss'
 import PostPage from '../../pages/postPage/PostPage';
 import CreateAccountPage from '../../pages/createAccountPage/CreateAccountPage';
+import LoginPage from '../../pages/loginPage/LoginPage';
+import EditProfilePage from '../../pages/editPrifilePage/EditProfilePage';
 
 function App() {
   // let data = null  
@@ -23,6 +25,8 @@ function App() {
             return <PostPage slug={slug} />
           }} />
         <Route path='/create' component={CreateAccountPage} />
+        <Route path='/login' component={LoginPage} />
+        <Route path='/edit_profile' component={EditProfilePage} />
       </div>
     </Router>
   );

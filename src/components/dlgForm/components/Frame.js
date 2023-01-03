@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { color } from "../../../styles/global"
+// import PropTypes from 'prop-types'
 
 const Fieldset = styled.fieldset`
   display: flex;
@@ -25,5 +26,6 @@ const Frame = ({children, title}) => {
     </Fieldset>
   )
 }
+
 
 export default Frame

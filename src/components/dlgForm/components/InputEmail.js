@@ -17,16 +17,16 @@ const InputEmail = () => {
   }
   return (    
     <Input
-    control={control}
-    name='imputEmail'
-    label='Email adress' 
-    value={state.email}
-    onChangeInput={onChangeInputEmail}
-    type='text' 
-    placeholder='Email adress'
-    autocomplete={'off'}
-    rules= {rules}      
-  />
+      control={control}
+      name='imputEmail'
+      label='Email adress' 
+      value={state?.email}
+      onChangeInput={onChangeInputEmail}
+      type='text' 
+      placeholder='Email adress'
+      autocomplete={'off'}
+      rules= {rules}
+    />
   )
 }
 

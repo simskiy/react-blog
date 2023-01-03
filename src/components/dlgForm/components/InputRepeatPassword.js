@@ -12,7 +12,9 @@ const InputRepeatPassword = () => {
     required: 'Поле обязательно к заполнению',
     validate: {
       required: (value) => {
-        if (value !== state.password) return 'Пароли не совпадают'
+        if (value !== state.password && value.length > 0) {
+          return 'Пароли не совпадают'
+        }
       }
     }
   }
@@ -22,7 +24,7 @@ const InputRepeatPassword = () => {
       control={control}
       name='inputRepeatPassword'
       rules={rules}
-      value={state.repeatPassword}
+      value={state?.repeatPassword}
       label='Repeat Password'
       type='password'
       onChangeInput={onChangeInputRepeatPassword}

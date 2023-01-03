@@ -1,7 +1,7 @@
-// import styles from './btn.module.scss'
 import {useDlgFormContext} from '../state/context'
 import styled from 'styled-components';
 import { color } from '../../../styles/global';
+import PropTypes from 'prop-types'
 
 const Button = styled.button`
   font: inherit;
@@ -30,15 +30,28 @@ const Button = styled.button`
   }
 `
 
-const Btn = ({label}) => {
-  const {dispatch, isValid} = useDlgFormContext()
+const Btn = ({label, getData}) => {
+  const {dispatch, isValid, reset, state} = useDlgFormContext()
   const onClickSubmit = () => {
+    getData(state)
     dispatch({type: 'onSubmit'})
   }
 
   return (
-    <Button type='submit' disabled = {!isValid} onClick={onClickSubmit}>{label}</Button>
+    <Button 
+      type='submit' 
+      disabled = {!isValid} 
+      onClick={() => {
+        onClickSubmit()
+        reset()
+      }}
+    >{label}</Button>
   )
+}
+
+Btn.propTypes = {
+  label: PropTypes.string,
+  getData: PropTypes.func
 }
 
 export default Btn

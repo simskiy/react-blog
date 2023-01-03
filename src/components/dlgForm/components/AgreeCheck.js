@@ -2,6 +2,7 @@ import {useDlgFormContext} from '../state/context'
 import styled from 'styled-components';
 import { color } from '../../../styles/global';
 import { useController } from 'react-hook-form';
+import React from 'react';
 
 const Check = styled.label`
   display: flex;
@@ -32,12 +33,11 @@ const AgreeCheck = () => {
   const onAgreeCheck = () => {
     dispatch({type: 'onCheckAgree'})
   }
-
   return (
     <Check>
       <input
         type='checkbox' 
-        checked={state.check} 
+        checked={state?.check} 
         onChange={(e) => {
           onAgreeCheck()
           onChange(e.target.checked)
@@ -48,4 +48,6 @@ const AgreeCheck = () => {
   )
 }
 
-export default AgreeCheck
+
+
+export default React.memo(AgreeCheck)

@@ -11,6 +11,10 @@ const InputUsername = () => {
 
   const rules = {
     required: 'Поле обязательно к заполнению',
+    pattern: {
+      value: /^[a-z][a-z0-9]*$/,
+      message: 'Нужно использовать только английские буквы в нижнем регистре',
+    },
     minLength: {
       value: 3,
       message: msg
@@ -18,11 +22,7 @@ const InputUsername = () => {
     maxLength: {
       value: 20,
       message: msg
-    },
-    pattern: {
-      value: /^[a-z][a-z0-9]*$/,
-      message: 'Нужно использовать только английские буквы в нижнем регистре',
-    }
+    }    
   }
   
   return (
@@ -31,7 +31,7 @@ const InputUsername = () => {
       name='inputUsername'
       rules={rules}
       label={'Username'}
-      value={state.username} 
+      value={state?.username} 
       type={'text'}
       onChangeInput={onChangeInputUsername}
       placeholder='Username' 

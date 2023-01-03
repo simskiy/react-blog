@@ -3,7 +3,8 @@
 
 .post {
   @include box-shadow;
-  width: 100%;
+  max-width: 940px;
+  margin: auto;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 635px 220px;

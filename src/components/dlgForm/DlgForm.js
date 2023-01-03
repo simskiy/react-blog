@@ -15,6 +15,7 @@ import { reducer } from "./state/reducer";
 import styled from "styled-components";
 import { formDlg } from "../../styles/mixins";
 import {useForm} from 'react-hook-form'
+import { initialState } from "./state/reducer";
 
 const Form = styled.form `
   ${formDlg}
@@ -23,21 +24,21 @@ const Form = styled.form `
 const DlgForm = ({children}) => {
 
   const {
-    formState: {isValid},
+    formState,
     handleSubmit,
-    control
-  } = useForm({mode: "onChange"})
+    control,
+    reset
+  } = useForm({mode: 'onChange'})
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data))
+    console.log()
   }
 
-  const [state, dispatch] = useReducer(reducer, {
-    check: true
-  })
-
+  const [state, dispatch] = useReducer(reducer, initialState)
+  const isValid = formState.isValid
   return (
-    <DlgFormProvider value={{state, dispatch, isValid, control}}>
+    <DlgFormProvider value={{state, dispatch, isValid, control, reset}}>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         {children}
       </Form>

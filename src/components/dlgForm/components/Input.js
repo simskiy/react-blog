@@ -75,7 +75,8 @@ Input.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   placeholder: PropTypes.string,
-  autocomplete: PropTypes.oneOf(['on', 'off'])
+  autocomplete: PropTypes.oneOf(['on', 'off']),
+  name: PropTypes.string,
 }
 
 export default Input

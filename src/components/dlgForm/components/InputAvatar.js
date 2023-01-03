@@ -17,7 +17,7 @@ const InputAvatar = () => {
       name='inputAvatar'
       rules={rules} 
       label='Avatar image (url)'
-      value={state.avatar}
+      value={state?.avatar}
       type='url'
       onChangeInput={onChangeInputAvatar}
       placeholder='Avatar image'

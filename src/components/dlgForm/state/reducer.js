@@ -1,3 +1,15 @@
+export const initialState = {
+  email: null,
+  check: true,
+  newPassword: null,
+  password: null,
+  repeatPassword: null,
+  username: null,
+  avatar: null
+}
+
+
+
 export function reducer (state, action) {
   switch(action.type) {
     case 'onChangeEmail': {
@@ -29,9 +41,9 @@ export function reducer (state, action) {
       return {...state, ...{check: !state.check}}
     }
     case 'onSubmit': {
-      // console.log(state)
-      break;
+      return initialState
     }
+    
     default: return state
   }
 }

@@ -8,8 +8,9 @@ import PostList from "../../components/postList/PostList";
 function PostListPage({getPosts, history}) {
   const [offset, setOffset] = useState(0)
   const [page, setPage] = useState(1)
-  const {data, isLoading, } = useGetArticlesListQuery(offset)
-  const content = isLoading ? <h2>Loading...</h2>: <PostList data={data} />
+  const {data, isLoading, isError} = useGetArticlesListQuery(offset)
+  let content = isLoading ? <h2>Loading...</h2>: <PostList data={data} />
+  if (isError) content = <h2>Error!!!</h2>
   return(
     <>
       <Header />
