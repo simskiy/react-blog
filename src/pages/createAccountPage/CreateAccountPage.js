@@ -2,25 +2,44 @@ import Header from "../../components/header/Header";
 // import CreateAccountDlg from "../../components/createAccount/CreateAccountDlg";
 import DlgForm from "../../components/dlgForm";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCreateAccountMutation } from "../../redux";
 
 const CreateAccountPage = () => {
-  const [errorMsg, setErrorMsg] = useState()
-  // const handleCreateAccount = async ({})
-
-  const getData = async (data) => {
-    // return await handleCreateAccount(data)
+  const [errorLogin, setErrorLogin] = useState(null)
+  const [errorEmail, setErrorEmail] = useState(null)
+  const [createAccount, {isError, isSuccess, data, error}] = useCreateAccountMutation()
+  
+  if (isSuccess) {
+    console.log(data)
   }
 
-  const error = 'Кастомная ошибка'
+  useEffect(() => {
+    if (isError) {
+      const errors = error?.data?.errors
+      if ('username' in errors) setErrorLogin({type: 'loginIsBusy', text: 'имя занято'})
+      if ('email' in errors) setErrorEmail({type: 'emailIsBusy', text: 'email занят'})
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[isError])
+
+  const getData = async ({username, email, password}) => {
+    await createAccount({
+      "user": {
+        "username": username,
+        "email": email,
+        "password": password,
+      }
+    })
+  }
 
   return (
     <>
       <Header />
-      <DlgForm mode='create' getData={getData} error={errorMsg}>
+      <DlgForm mode='create' getData={getData}>
         <DlgForm.Frame title='Create New Account'>
-          <DlgForm.InputUsername />
-          <DlgForm.InputEmail />
+          <DlgForm.InputUsername error={errorLogin}/>
+          <DlgForm.InputEmail error={errorEmail} />
           <DlgForm.InputPassword />
           <DlgForm.InputRepeatPassword />
         </DlgForm.Frame>

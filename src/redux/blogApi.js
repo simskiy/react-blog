@@ -18,6 +18,13 @@ export const blogApi = createApi({
         method: 'POST',
         body,
       })
+    }),
+    createAccount: build.mutation({
+      query: (body) => ({
+        url: 'users',
+        method: 'POST',
+        body,
+      })
     })
   })
 })
@@ -25,5 +32,6 @@ export const blogApi = createApi({
 export const {
   useGetArticlesListQuery, 
   useGetArticleQuery,
-  useLoginAccountMutation
+  useLoginAccountMutation,
+  useCreateAccountMutation
 } = blogApi 

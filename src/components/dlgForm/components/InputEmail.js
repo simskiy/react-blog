@@ -1,6 +1,6 @@
 import { useDlgFormContext } from "../state/context";
 import Input from "./Input";
-const InputEmail = () => {
+const InputEmail = ({error}) => {
 
   const {state, dispatch, control} = useDlgFormContext()
 
@@ -27,6 +27,7 @@ const InputEmail = () => {
       placeholder='Email adress'
       autocomplete={'off'}
       rules= {rules}
+      error={error}
     />
   )
 }

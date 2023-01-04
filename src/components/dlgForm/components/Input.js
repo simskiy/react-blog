@@ -44,7 +44,8 @@ const Input = (props) => {
     onChangeInput,
     type,
     placeholder,
-    rules
+    rules,
+    error
   } = props
 
   const {field: {onChange, onBlur}, fieldState} = useController({
@@ -53,18 +54,12 @@ const Input = (props) => {
     rules
   })
 
-  const {error, setError, clearErrors} = useDlgFormContext()
-  const getError = () => {
-    return setError(name, {type: error.type, message: error.text})
-  }
+  const {setError, clearErrors, dispatch} = useDlgFormContext()
 
   useEffect(() => {
-    if (error?.type==='invalidLogin') {
-      switch(true) {
-        case name === 'inputEmail': getError();break
-        case name === 'inputPassword': getError(); break
-        default: return undefined
-      }
+    if (error) {
+      dispatch({type: 'onReset', payload: {component: name}})
+      setError(name, {type: error?.type, message: error?.text})
     }
     setTimeout(() => {
       clearErrors()

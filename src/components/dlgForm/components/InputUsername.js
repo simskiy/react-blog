@@ -1,7 +1,7 @@
 import { useDlgFormContext } from "../state/context";
 import Input from "./Input";
 
-const InputUsername = () => {
+const InputUsername = ({error}) => {
   const {state, dispatch, control} = useDlgFormContext()
   const msg = 'Длина имени должна быть от 3 до 20 символов (включительно)'
   
@@ -34,7 +34,8 @@ const InputUsername = () => {
       value={state?.username} 
       type={'text'}
       onChangeInput={onChangeInputUsername}
-      placeholder='Username' 
+      placeholder='Username'
+      error={error}
     />
   )
 }

@@ -6,10 +6,17 @@ export const initialState = {
   repeatPassword: null,
   username: null,
   avatar: null,
-  error: null
 }
 
 
+const components = {
+  inputEmail: 'email',
+  inputNewPassword: 'newPassword',
+  inputPassword: 'password',
+  inputRepeatPassword: 'repeatPassword',
+  inputUsername: 'username',
+  inputAvatar: 'avatar'
+}
 
 export function reducer (state, action) {
   switch(action.type) {
@@ -46,7 +53,8 @@ export function reducer (state, action) {
       return {...state, mode}
     }
     case 'onReset': {
-      return {...state, ...initialState}
+      const {component} = action.payload
+      return {...state, ...{[components[component]]: null, password: null, repeatPassword: null, newPassword: null}}
     }
     // case 'setError': {
     //   const {error} = action.payload

@@ -21,7 +21,7 @@ const Form = styled.form `
   ${formDlg}
 `;
 
-const DlgForm = ({children, mode, getData, error}) => {
+const DlgForm = ({children, mode, getData}) => {
   const {
     formState,
     handleSubmit,
@@ -35,27 +35,23 @@ const DlgForm = ({children, mode, getData, error}) => {
 
   const onSubmit = async () => {
     // console.log(error)
-    await getState()
+    // await getState()
     // console.log(error)
-    reset()
-    dispatch({type:'onReset'})
-    
+    // reset()
+    // dispatch({type:'onReset'})
+    await getData(state) 
   }
 
   const onErrors = (data) => {
     console.log(data)
   }
-
-  const getState = async () => {
-    return await getData(state)
-  }
-  
+    
   useEffect(() => {
     dispatch({type: 'onSelectMode', payload: {mode: mode}})
   }, [mode])
 
   return (
-    <DlgFormProvider value={{state, dispatch, isValid, control, reset, error, setError, clearErrors}}>
+    <DlgFormProvider value={{state, dispatch, isValid, control, reset, setError, clearErrors}}>
       <Form onSubmit={handleSubmit(onSubmit, onErrors)} noValidate>
         {children}
       </Form>
