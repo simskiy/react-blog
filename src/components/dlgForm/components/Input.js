@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { color } from '../../../styles/global'
 import ErrorsMsg from './ErrorsMsg';
 import { useController } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useDlgFormContext } from '../state/context';
 
 const InputWrapper = styled.div`
 & label {
@@ -50,6 +52,26 @@ const Input = (props) => {
     name,
     rules
   })
+
+  const {error, setError, clearErrors} = useDlgFormContext()
+  const getError = () => {
+    return setError(name, {type: error.type, message: error.text})
+  }
+
+  useEffect(() => {
+    if (error?.type==='invalidLogin') {
+      switch(true) {
+        case name === 'inputEmail': getError();break
+        case name === 'inputPassword': getError(); break
+        default: return undefined
+      }
+    }
+    setTimeout(() => {
+      clearErrors()
+    }, 5000)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error])
+
   return (
     <InputWrapper error={fieldState?.error}>
       <label>

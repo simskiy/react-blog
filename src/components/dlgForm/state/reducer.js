@@ -5,7 +5,8 @@ export const initialState = {
   password: null,
   repeatPassword: null,
   username: null,
-  avatar: null
+  avatar: null,
+  error: null
 }
 
 
@@ -40,9 +41,20 @@ export function reducer (state, action) {
       // const {check} = action.payload
       return {...state, ...{check: !state.check}}
     }
-    case 'onSubmit': {
-      return initialState
+    case 'onSelectMode': {
+      const {mode} = action.payload
+      return {...state, mode}
     }
+    case 'onReset': {
+      return {...state, ...initialState}
+    }
+    // case 'setError': {
+    //   const {error} = action.payload
+    //   return {...state, error}
+    // }
+    // case 'onSubmit': {
+    //   return initialState
+    // }
     
     default: return state
   }

@@ -30,28 +30,20 @@ const Button = styled.button`
   }
 `
 
-const Btn = ({label, getData}) => {
-  const {dispatch, isValid, reset, state} = useDlgFormContext()
-  const onClickSubmit = () => {
-    getData(state)
-    dispatch({type: 'onSubmit'})
-  }
+const Btn = ({label}) => {
+  const {isValid} = useDlgFormContext()
 
   return (
     <Button 
       type='submit' 
       disabled = {!isValid} 
-      onClick={() => {
-        onClickSubmit()
-        reset()
-      }}
+      
     >{label}</Button>
   )
 }
 
 Btn.propTypes = {
   label: PropTypes.string,
-  getData: PropTypes.func
 }
 
 export default Btn

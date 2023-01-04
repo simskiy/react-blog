@@ -10,7 +10,7 @@ import Line from "./components/Line";
 import AgreeCheck from "./components/AgreeCheck";
 import Btn from "./components/Btn";
 import Sign from "./components/Sign";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { reducer } from "./state/reducer";
 import styled from "styled-components";
 import { formDlg } from "../../styles/mixins";
@@ -21,25 +21,42 @@ const Form = styled.form `
   ${formDlg}
 `;
 
-const DlgForm = ({children}) => {
-
+const DlgForm = ({children, mode, getData, error}) => {
   const {
     formState,
     handleSubmit,
     control,
-    reset
+    reset,
+    setError,
+    clearErrors
   } = useForm({mode: 'onChange'})
-
-  const onSubmit = (data) => {
-    console.log(JSON.stringify(data))
-    console.log()
-  }
-
   const [state, dispatch] = useReducer(reducer, initialState)
   const isValid = formState.isValid
+
+  const onSubmit = async () => {
+    // console.log(error)
+    await getState()
+    // console.log(error)
+    reset()
+    dispatch({type:'onReset'})
+    
+  }
+
+  const onErrors = (data) => {
+    console.log(data)
+  }
+
+  const getState = async () => {
+    return await getData(state)
+  }
+  
+  useEffect(() => {
+    dispatch({type: 'onSelectMode', payload: {mode: mode}})
+  }, [mode])
+
   return (
-    <DlgFormProvider value={{state, dispatch, isValid, control, reset}}>
-      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <DlgFormProvider value={{state, dispatch, isValid, control, reset, error, setError, clearErrors}}>
+      <Form onSubmit={handleSubmit(onSubmit, onErrors)} noValidate>
         {children}
       </Form>
     </DlgFormProvider>

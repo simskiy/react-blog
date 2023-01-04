@@ -11,8 +11,19 @@ export const blogApi = createApi({
     }),
     getArticle: build.query({
       query: (slug) =>  `articles/${slug}`
+    }),
+    loginAccount: build.mutation({
+      query: (body) => ({
+        url: 'users/login',
+        method: 'POST',
+        body,
+      })
     })
   })
 })
 
-export const {useGetArticlesListQuery, useGetArticleQuery} = blogApi 
+export const {
+  useGetArticlesListQuery, 
+  useGetArticleQuery,
+  useLoginAccountMutation
+} = blogApi 
