@@ -2,18 +2,22 @@ import {Image} from 'antd'
 import styles from './header.module.scss'
 import { Link } from 'react-router-dom'
 
+import img from './avatar.png'
+
 const Header = () => {
   return (
     <div className={styles.header}>
-      <p className={styles.title}>Realworld Blog</p>
-      <Link to='/login'><button>Sign In</button></Link>
-      <Link to='/create'><button>Sign Up</button></Link>
-      <button>CreateArticle</button>
-      <div>
-        <span>John Doe</span>
-        <Image alt='аватарка' />
+      <div className={styles.wrapper}>
+        <Link to='/' style={{marginRight: 'auto', textDecoration: 'none'}}><span className={styles.title}>Realworld Blog</span></Link>
+        <Link to='/login'><button className={styles.btn_login}>Sign In</button></Link>
+        <Link to='/create'><button className={styles.btn_create}>Sign Up</button></Link>
+        <button className={styles.btn_article}>CreateArticle</button>
+        <div className={styles.user}>
+          <span className={styles.user_name}>John Doe</span>
+          <Image alt='аватарка' className={styles.user_img} src={img}/>
+        </div>
+        <button className={styles.btn_logout}>Log out</button>
       </div>
-      <button>Log out</button>
     </div>
   )
 }

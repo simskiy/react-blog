@@ -1,5 +1,4 @@
 import Header from "../../components/header/Header";
-// import CreateAccountDlg from "../../components/createAccount/CreateAccountDlg";
 import DlgForm from "../../components/dlgForm";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";

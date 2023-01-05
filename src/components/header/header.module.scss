@@ -1,8 +1,96 @@
+@import "../../styles/global.scss";
+
+@mixin btn-action {
+  cursor: pointer;
+  &:hover {
+    background-color: #ebeef3;
+    transition: all ease 0.5s;
+  }
+}
+
+@mixin text-action {
+  cursor: pointer;
+  &:hover {
+    text-shadow: gray -2px -2px 3px;
+    transition: all ease 0.5s;
+  }
+}
+
 .header {
+  background-color: #fff;
+  margin-bottom: 14px;
+  color: $heading-color;
+}
+.wrapper {
   display: flex;
   align-items: center;
-
+  max-width: 1440px;
+  height: 80px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 0 22px;
   & .title {
     margin-right: auto;
+    font-size: 18px;
+    text-decoration: none;
+    color: $heading-color;
+    @include text-action;
+  }
+
+  & .btn_login {
+    border: none;
+    font: inherit;
+    background-color: inherit;
+    font-size: 18px;
+    margin-right: 25px;
+    @include text-action;
+  }
+  & .btn_create {
+    border: 1px solid $success-color;
+    color: $success-color;
+    background-color: inherit;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: inherit;
+    width: 110px;
+    height: 50px;
+    margin-right: 25px;
+    @include btn-action;
+  }
+  & .btn_article {
+    margin-right: 25px;
+    border: 1px solid $success-color;
+    color: $success-color;
+    background-color: inherit;
+    border-radius: 5px;
+    width: 112px;
+    height: 30px;
+    font-size: 14px;
+    font-family: inherit;
+    @include btn-action;
+  }
+  & .user {
+    margin-right: 25px;
+  }
+
+  & .user_name {
+    color: $heading-color;
+    font-size: 18px;
+    margin-right: 12px;
+  }
+  & .user_img {
+    width: 45px;
+    height: 45px;
+  }
+  & .btn_logout {
+    width: 110px;
+    height: 50px;
+    border: 1px solid $text-color;
+    border-radius: 5px;
+    background-color: inherit;
+    color: $text-color;
+    font-family: inherit;
+    font-size: 18px;
+    @include btn-action;
   }
 }

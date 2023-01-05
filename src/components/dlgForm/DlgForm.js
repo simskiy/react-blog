@@ -19,6 +19,8 @@ import { initialState } from "./state/reducer";
 
 const Form = styled.form `
   ${formDlg}
+  background-color: white;
+  margin-top: 45px;
 `;
 
 const DlgForm = ({children, mode, getData}) => {
@@ -34,18 +36,13 @@ const DlgForm = ({children, mode, getData}) => {
   const isValid = formState.isValid
 
   const onSubmit = async () => {
-    // console.log(error)
-    // await getState()
-    // console.log(error)
-    // reset()
-    // dispatch({type:'onReset'})
     await getData(state) 
   }
 
   const onErrors = (data) => {
     console.log(data)
   }
-    
+  
   useEffect(() => {
     dispatch({type: 'onSelectMode', payload: {mode: mode}})
   }, [mode])
