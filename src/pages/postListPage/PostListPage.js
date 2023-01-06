@@ -6,7 +6,7 @@ import Header from "../../components/header/Header";
 import PostList from "../../components/postList/PostList";
 import styled from "styled-components";
 import {setUser, setMode} from '../../redux/slice'
-import { useDispatch, useSelector } from "react-redux";
+import useStorage from "../../components/hooks/useStorage";
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,19 +18,12 @@ function PostListPage({history, location}) {
   const [page, setPage] = useState(1)
   const {data, isLoading, isError} = useGetArticlesListQuery(offset)
   let content = isLoading ? <h2>Loading...</h2>: <PostList data={data} />
-  const dispatch = useDispatch()
-  const isStateUser = useSelector(state => state.reducer.user)
 
+  useStorage(setUser, setMode)
   useEffect(() => {
     if (location.pathname === '/') {
       history.push('/articles')
     }
-
-    if (sessionStorage.user && !isStateUser) {
-      dispatch(setUser(JSON.parse(sessionStorage.user)))
-      dispatch(setMode('isUser'))
-    }
-    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   

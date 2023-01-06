@@ -1,11 +1,16 @@
+// import useInitValue from "../../hooks/useInitValue";
+import { useEffect } from "react";
 import { useDlgFormContext } from "../state/context";
 import Input from "./Input";
-const InputEmail = ({error}) => {
+const InputEmail = ({error, initValue = null}) => {
 
   const {state, dispatch, control} = useDlgFormContext()
+  const action = (value) => {
+    return {type: 'onChangeEmail', payload: {email: value}}
+  }
 
   const onChangeInputEmail = (value) => {
-    dispatch({type: 'onChangeEmail', payload: {email: value}})
+    dispatch(action(value))
   }
    
   const rules = {
@@ -16,6 +21,9 @@ const InputEmail = ({error}) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => dispatch(action(initValue)), [initValue])
+  
   return (    
     <Input
       control={control}

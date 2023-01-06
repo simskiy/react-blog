@@ -1,19 +1,23 @@
 import DlgForm from "../../components/dlgForm"
 import Header from "../../components/header/Header"
+import { setUser, setMode } from "../../redux/slice"
+import useStorage from "../../components/hooks/useStorage"
+import { useSelector } from "react-redux"
 
 const EditProfilePage = () => {
-  const getData = ({mode, username, email, newPassword, avatar}) => {
-    console.log(mode, username, email, newPassword, avatar)
+  useStorage(setUser, setMode)
+  const user = useSelector(state => state.reducer.user)
+  const getData = async (data) => {
   }
   return (
     <>
     <Header />
     <DlgForm mode='edit' getData={getData}>
       <DlgForm.Frame title='Edit Profile'>
-        <DlgForm.InputUsername />
-        <DlgForm.InputEmail />
+        <DlgForm.InputUsername initValue={user?.username}/>
+        <DlgForm.InputEmail initValue={user?.email}/>
         <DlgForm.InputNewPassword />
-        <DlgForm.InputAvatar />
+        <DlgForm.InputAvatar initValue={user?.image}/>
       </DlgForm.Frame>
       <DlgForm.Btn label='Save' />
     </DlgForm>

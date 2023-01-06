@@ -1,12 +1,13 @@
+import { useEffect } from "react";
 import { useDlgFormContext } from "../state/context";
 import Input from "./Input";
 
-const InputUsername = ({error}) => {
+const InputUsername = ({error, initValue = null}) => {
   const {state, dispatch, control} = useDlgFormContext()
   const msg = 'Длина имени должна быть от 3 до 20 символов (включительно)'
   
-  const onChangeInputUsername = (value) => {
-    dispatch({type: 'onChangeUsername', payload: {username: value}})
+  const action = (value) => {
+    return {type: 'onChangeUsername', payload: {username: value}}
   }
 
   const rules = {
@@ -24,6 +25,13 @@ const InputUsername = ({error}) => {
       message: msg
     }    
   }
+
+  const onChangeInputUsername = (value) => {
+    dispatch(action(value))
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => dispatch(action(initValue)), [initValue])
   
   return (
     <Input

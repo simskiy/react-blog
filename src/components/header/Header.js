@@ -1,11 +1,11 @@
 import {Image} from 'antd'
 import styles from './header.module.scss'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, setMode } from '../../redux/slice'
 import img from './avatar.png'
 
-const Header = () => {
+const Header = ({history}) => {
   const mode = useSelector(state => state.reducer.mode)
   const currentUser = useSelector(state => state.reducer.user)
   const dispatch = useDispatch()
@@ -23,6 +23,7 @@ const Header = () => {
     dispatch(setUser(null))
     dispatch(setMode('isGuest'))
     sessionStorage.removeItem('user')
+    history.push('/articles')
   }
 
   const loginButton = <Link key='login' to='/sign-in'><button className={styles.btn_login}>Sign In</button></Link>
@@ -42,7 +43,7 @@ const Header = () => {
                     />
                   </Link>
                 </div>)
-  const logOut = <button key='logout' onClick={() => logout()} className={styles.btn_logout}>Log out</button>
+  const logOut = <button key='logout' onClick={logout} className={styles.btn_logout}>Log out</button>
 
   const content = getContent(mode)
   return (
@@ -57,4 +58,4 @@ const Header = () => {
 
 
 
-export default Header
+export default withRouter(Header)
