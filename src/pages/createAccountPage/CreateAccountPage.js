@@ -45,7 +45,7 @@ const CreateAccountPage = () => {
         <DlgForm.Line />
         <DlgForm.AgreeCheck />
         <DlgForm.Btn label='Create' />
-        <DlgForm.Sign isSign={true} link={<Link to='/login'>Sign In</Link>} />
+        <DlgForm.Sign isSign={true} link={<Link to='/sign-in'>Sign In</Link>} />
       </DlgForm>
     </>
   )

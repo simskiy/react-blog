@@ -25,6 +25,12 @@ export const blogApi = createApi({
         method: 'POST',
         body,
       })
+    }),
+    getAccount: build.query({
+      query: (body) => ({
+        url: 'user',
+        body,
+      })
     })
   })
 })
@@ -33,5 +39,6 @@ export const {
   useGetArticlesListQuery, 
   useGetArticleQuery,
   useLoginAccountMutation,
-  useCreateAccountMutation
+  useCreateAccountMutation,
+  useGetAccountQuery
 } = blogApi 

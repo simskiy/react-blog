@@ -19,7 +19,7 @@ const Check = styled.label`
 `
 
 const AgreeCheck = () => {
-  const {state, dispatch, control} = useDlgFormContext()
+  const {state, dispatch, control, } = useDlgFormContext()
   const {field: {onChange}} = useController({
     control,
     name: 'agree',

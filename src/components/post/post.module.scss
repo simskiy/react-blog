@@ -77,6 +77,8 @@
 
   & .tag {
     // min-width: 40px;
+    display: flex;
+    align-items: center;
     max-width: 100px;
     overflow: hidden;
     padding: 0 5px;
