@@ -4,8 +4,10 @@ import { btnAddTag, btnDelete } from "../../styles/mixins"
 
 export const Title = styled.span`
   ${labelArticle}
+  display: inline-block;
   margin: 0;
   padding: 0;
+  margin-bottom: 5px;
 `
 
 export const TagsWrapper = styled.ul`

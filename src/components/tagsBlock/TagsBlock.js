@@ -31,13 +31,13 @@ const TagsBlock = (props) => {
               }}
             />
             {
-              (ind > 0 && tags.length > 0) && <BtnDelete 
+              (ind > 0 || tags.length > 1) && <BtnDelete 
                 type='button'
                 onClick={() => console.log('delete')}
               >Delete</BtnDelete>
             }
             {
-              (ind === (tags.length - 1) || ind!==0) && <BtnAddTag
+              (ind === (tags.length - 1) && ind!==0) && <BtnAddTag
                 type='button'
                 onClick={() => console.log('add')}
               >Add Tag</BtnAddTag>
