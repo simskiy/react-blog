@@ -7,10 +7,9 @@ import { useState } from 'react'
 import TagsBlock from '../../components/tagsBlock/TagsBlock'
 import { setUser, setMode } from '../../redux/slice'
 import useStorage from '../../components/hooks/useStorage'
-// import Input from 'antd/es/input/Input'
-// import { Descriptions } from 'antd'
+import {useController, useForm } from 'react-hook-form'
 
-const ArticleWrapper = styled.div`
+const ArticleForm = styled.form`
   ${boxShadow}
   display: flex;
   flex-direction: column;
@@ -33,44 +32,78 @@ const ArticlePage = ({
 
 }) => {
   const tagsInit = ['hello', 'mother', 'fucker']
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [text, setText] = useState('')
+
+  const [title, setTitle] = useState(null)
+  const [description, setDescription] = useState(null)
+  const [text, setText] = useState(null)
   const [tags, setTags] = useState(tagsInit)
-
   useStorage(setUser, setMode)
+  const { 
+    // register, 
+    handleSubmit, 
+    // watch,
+    control,
+    formState,
+    setValue
+  } = useForm({mode: 'onChange'})
+  
+  const isValid = formState.isValid
+  
 
+  const rulesInput = {
+    required: 'Поле обязталель но к заполнению'
+  }
+
+  const onSubmit = (data) => console.log(data)
+  
   return (
     <>
       <Header />
-      <ArticleWrapper>      
-        <ArticleTitle />
-        <ArticleInput 
-          label='Text'
+      <ArticleForm onSubmit={handleSubmit(onSubmit)}>
+        <ArticleTitle />           
+        <ArticleInput
+          control={control}
+          rules={rulesInput}
+          name='title'
+          label='Title'
           placeholder='Text'
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChangeInput={setTitle}
+          setValue={setValue}
         />
-        <ArticleInput 
+        <ArticleInput
+          rules={rulesInput}
+          control={control}
+          name='description'
           label='Short Descriptions'
           placeholder='Desctiptions'
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChangeInput={setDescription}
+          setValue={setValue}
         />
-        <ArticleInput 
+        <ArticleInput
+          rules={rulesInput}
+          control={control}
+          name='text'
           label='Text'
           placeholder='Text'
           value={text}
           type='textArea'
-          onChange={(e) => setText(e.target.value)}
+          onChangeInput={setText}
+          setValue={setValue}
         />
-        <TagsBlock tags={tags}/>
+        <TagsBlock
+          name='tag'
+          tags={tags} 
+          setTags={setTags}
+          control={control}
+        />
         <BtnSend
           type='submit'
+          isValid={isValid}
         >Send</BtnSend>
-      </ArticleWrapper>
+      </ArticleForm>
     </>
-    
   )
 }
 
