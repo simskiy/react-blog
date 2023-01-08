@@ -27,7 +27,7 @@ const InputPassword = ({error}) => {
       name='inputPassword'
       rules={rules}
       label='Password'
-      value={state?.password}
+      curValue={state?.password}
       type='password'
       onChangeInput={onChangeInputPassword}
       placeholder='Password'

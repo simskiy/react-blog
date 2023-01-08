@@ -3,7 +3,7 @@ import { useDlgFormContext } from "../state/context";
 import Input from "./Input";
 
 const InputUsername = ({error, initValue = null}) => {
-  const {state, dispatch, control} = useDlgFormContext()
+  const {state, dispatch, control, setValue} = useDlgFormContext()
   const msg = 'Длина имени должна быть от 3 до 20 символов (включительно)'
   
   const action = (value) => {
@@ -29,9 +29,12 @@ const InputUsername = ({error, initValue = null}) => {
   const onChangeInputUsername = (value) => {
     dispatch(action(value))
   }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => dispatch(action(initValue)), [initValue])
+  
+  useEffect(() => {
+    dispatch(action(initValue))
+    setValue('inputUsername', initValue)
+  // eslint-disable-next-line react-hooks/exhaustive-deps  
+  }, [initValue])
   
   return (
     <Input
@@ -39,7 +42,7 @@ const InputUsername = ({error, initValue = null}) => {
       name='inputUsername'
       rules={rules}
       label={'Username'}
-      value={state?.username} 
+      curValue={state?.username} 
       type={'text'}
       onChangeInput={onChangeInputUsername}
       placeholder='Username'

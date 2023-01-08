@@ -30,7 +30,8 @@ const DlgForm = ({children, mode, getData}) => {
     control,
     reset,
     setError,
-    clearErrors
+    clearErrors,
+    setValue   
   } = useForm({mode: 'onChange'})
   const [state, dispatch] = useReducer(reducer, initialState)
   const isValid = formState.isValid
@@ -48,7 +49,7 @@ const DlgForm = ({children, mode, getData}) => {
   }, [mode])
 
   return (
-    <DlgFormProvider value={{state, dispatch, isValid, control, reset, setError, clearErrors}}>
+    <DlgFormProvider value={{state, dispatch, isValid, control, reset, setError, clearErrors, setValue}}>
       <Form onSubmit={handleSubmit(onSubmit, onErrors)} noValidate>
         {children}
       </Form>

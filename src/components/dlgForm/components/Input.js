@@ -39,7 +39,7 @@ const Input = (props) => {
     control,
     name,
     label,
-    value,
+    curValue,
     onChangeInput,
     type,
     placeholder,
@@ -50,7 +50,7 @@ const Input = (props) => {
   const {field: {onChange, onBlur}, fieldState} = useController({
     control,
     name,
-    rules
+    rules,
   })
 
   const {setError, clearErrors, dispatch} = useDlgFormContext()
@@ -65,7 +65,7 @@ const Input = (props) => {
     }, 5000)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error])
-
+  
   return (
     <InputWrapper error={fieldState?.error}>
       <label>
@@ -74,7 +74,7 @@ const Input = (props) => {
           type={type}
           placeholder={placeholder}
           autoComplete={autocomplete}
-          value={value || ''}
+          value={curValue || ''}
           onChange={(event) => {
             onChange(event.target.value)
             onBlur(event.target.value)

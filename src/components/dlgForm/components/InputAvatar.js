@@ -25,7 +25,7 @@ const InputAvatar = ({initValue=null}) => {
       name='inputAvatar'
       rules={rules} 
       label='Avatar image (url)'
-      value={state?.avatar}
+      curValue={state?.avatar}
       type='url'
       onChangeInput={onChangeInputAvatar}
       placeholder='Avatar image'

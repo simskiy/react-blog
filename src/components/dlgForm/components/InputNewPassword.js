@@ -1,12 +1,16 @@
 import {useDlgFormContext} from '../state/context'
 import Input from './Input'
 
-const InputNewPassword = () => {
+const InputNewPassword = ({initValue=null}) => {
   const {state, dispatch, control} = useDlgFormContext()
   const msg = 'Пароль должен быть от 6 до 40 символов (включительно)'
 
+  const action = (value) => {
+    return {type: 'onChangeNewPassword', payload: {newPassword: value}}
+  }
+  
   const onChangeNewPassword = (value) => {
-    dispatch({type: 'onChangeNewPassword', payload: {newPassword: value}})
+    dispatch(action(value))
   }
 
   const rules ={
@@ -27,8 +31,8 @@ const InputNewPassword = () => {
       name='inputNewPassword'
       rules={rules}
       label='New password'
-      value={state?.newPassword}
-      type='password'
+      curValue={state?.newPassword}
+      type='text'
       onChangeInput={onChangeNewPassword}
       placeholder='New password'
     />

@@ -4,7 +4,7 @@ import { useDlgFormContext } from "../state/context";
 import Input from "./Input";
 const InputEmail = ({error, initValue = null}) => {
 
-  const {state, dispatch, control} = useDlgFormContext()
+  const {state, dispatch, control, setValue} = useDlgFormContext()
   const action = (value) => {
     return {type: 'onChangeEmail', payload: {email: value}}
   }
@@ -20,16 +20,19 @@ const InputEmail = ({error, initValue = null}) => {
       message: 'Не корректный email'
     }
   }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => dispatch(action(initValue)), [initValue])
+ 
+  useEffect(() => {
+    dispatch(action(initValue))
+    setValue('inputEmail', initValue)
+   // eslint-disable-next-line react-hooks/exhaustive-deps  
+  }, [initValue])
   
   return (    
     <Input
       control={control}
       name='inputEmail'
       label='Email adress' 
-      value={state?.email}
+      curValue={state?.email}
       onChangeInput={onChangeInputEmail}
       type='text' 
       placeholder='Email adress'

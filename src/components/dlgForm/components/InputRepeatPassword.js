@@ -24,7 +24,7 @@ const InputRepeatPassword = () => {
       control={control}
       name='inputRepeatPassword'
       rules={rules}
-      value={state?.repeatPassword}
+      curValue={state?.repeatPassword}
       label='Repeat Password'
       type='password'
       onChangeInput={onChangeInputRepeatPassword}

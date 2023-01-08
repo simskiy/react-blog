@@ -4,6 +4,13 @@ export const blogApi = createApi({
   reducerPath: 'blogApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://blog.kata.academy/api/',
+    prepareHeaders: (headers, {getState}) => {
+      const token = getState()?.reducer?.user?.token
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`)
+      }      
+      return headers
+    }
   }),
   endpoints: (build) => ({
     getArticlesList: build.query({
@@ -31,6 +38,13 @@ export const blogApi = createApi({
         url: 'user',
         body,
       })
+    }),
+    updateAccount: build.mutation({
+      query: body => ({
+        url: 'user',
+        method: 'PUT',
+        body
+      })
     })
   })
 })
@@ -40,5 +54,6 @@ export const {
   useGetArticleQuery,
   useLoginAccountMutation,
   useCreateAccountMutation,
-  useGetAccountQuery
+  useGetAccountQuery,
+  useUpdateAccountMutation,
 } = blogApi 
