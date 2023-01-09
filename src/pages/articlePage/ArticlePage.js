@@ -7,7 +7,7 @@ import { useState } from 'react'
 import TagsBlock from '../../components/tagsBlock/TagsBlock'
 import { setUser, setMode } from '../../redux/slice'
 import useStorage from '../../components/hooks/useStorage'
-import {useController, useForm } from 'react-hook-form'
+import {useForm } from 'react-hook-form'
 
 const ArticleForm = styled.form`
   ${boxShadow}
@@ -39,16 +39,24 @@ const ArticlePage = ({
   const [tags, setTags] = useState(tagsInit)
   useStorage(setUser, setMode)
   const { 
-    // register, 
     handleSubmit, 
-    // watch,
     control,
     formState,
-    setValue
   } = useForm({mode: 'onChange'})
   
   const isValid = formState.isValid
   
+  const changeTag = (value, ind) => {
+    setTags(tags.map((v, i) => i === ind ? value : v))
+  }
+  const deleteTag = (ind) => {
+   setTags(tags.filter((_,i) => ind !== i))
+  }
+  const addTag = (value) => {
+    const result = new Set([...tags.slice(0, -1), value, ''])
+    // console.log(Array.from(result))
+    setTags(Array.from(result))
+  }
 
   const rulesInput = {
     required: 'Поле обязталель но к заполнению'
@@ -69,7 +77,7 @@ const ArticlePage = ({
           placeholder='Text'
           value={title}
           onChangeInput={setTitle}
-          setValue={setValue}
+          // setValue={setTitle}
         />
         <ArticleInput
           rules={rulesInput}
@@ -79,7 +87,7 @@ const ArticlePage = ({
           placeholder='Desctiptions'
           value={description}
           onChangeInput={setDescription}
-          setValue={setValue}
+          // setValue={setValue}
         />
         <ArticleInput
           rules={rulesInput}
@@ -90,13 +98,17 @@ const ArticlePage = ({
           value={text}
           type='textArea'
           onChangeInput={setText}
-          setValue={setValue}
+          // setValue={setValue}
         />
         <TagsBlock
+          // rules={rulesInput}
           name='tag'
           tags={tags} 
-          setTags={setTags}
+          // setTags={setTags}
           control={control}
+          onChangeInput={changeTag}
+          onDeleteTag={deleteTag}
+          onAddTag={addTag}
         />
         <BtnSend
           type='submit'

@@ -6,6 +6,9 @@ const TagsBlock = (props) => {
     control,
     name,
     tags,
+    onChangeInput,
+    onDeleteTag,
+    onAddTag,
     ...rest
   } = props
 
@@ -20,26 +23,33 @@ const TagsBlock = (props) => {
       <Title>Tags</Title>
       <TagsWrapper {...rest}>
         {tags.map((item, ind) => (
-          <Item key={item}>
+          <Item key={ind}>
             <ArticleInput
+              placeholder='Tag'
               control={control}
               value={item}
               style={styleLi}
               name={name}
               onChange={(e) => {
                 field.onChange(e.target.value)
+                onChangeInput(e.target.value, ind)
               }}
             />
             {
               (ind > 0 || tags.length > 1) && <BtnDelete 
                 type='button'
-                onClick={() => console.log('delete')}
+                onClick={() => onDeleteTag(ind)}
               >Delete</BtnDelete>
             }
             {
-              (ind === (tags.length - 1) && ind!==0) && <BtnAddTag
+              (tags.length === 1 || ind === tags.length - 1) && <BtnAddTag
                 type='button'
-                onClick={() => console.log('add')}
+                onClick={() => {
+                  if (item.trim().length > 0) {
+                    const result = item.trim()
+                    return onAddTag(result)
+                  }                  
+                }}
               >Add Tag</BtnAddTag>
             }
           </Item>
