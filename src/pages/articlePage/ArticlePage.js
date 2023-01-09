@@ -3,11 +3,14 @@ import { boxShadow, btnSend } from '../../styles/mixins'
 import Header from '../../components/header/Header'
 import ArticleTitle from '../../components/articleTitle/ArticleTitle'
 import ArticleInput from '../../components/articleInput/ArticleInput'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TagsBlock from '../../components/tagsBlock/TagsBlock'
 import { setUser, setMode } from '../../redux/slice'
 import useStorage from '../../components/hooks/useStorage'
 import {useForm } from 'react-hook-form'
+import { rulesTitle, rulesDescription, rulesText, rulesTags } from './rules'
+import { Button } from 'antd'
+import { useCreateArticleMutation } from '../../redux'
 
 const ArticleForm = styled.form`
   ${boxShadow}
@@ -21,15 +24,16 @@ const ArticleForm = styled.form`
   background-color: white;
 `
 
-const BtnSend = styled.button`
+const BtnSend = styled(Button)`
   ${btnSend}
 `
 
 const ArticlePage = ({
   // title='',
   // description='',
-  // text='Привет от всех нас до всех вас'
-
+  // text='Привет от всех нас до всех вас',
+  // mode='create'
+  history
 }) => {
   const tagsInit = ['hello', 'mother', 'fucker']
 
@@ -37,6 +41,7 @@ const ArticlePage = ({
   const [description, setDescription] = useState(null)
   const [text, setText] = useState(null)
   const [tags, setTags] = useState(tagsInit)
+  const [createArticle, {isError, isSuccess, data, error}] = useCreateArticleMutation()
   useStorage(setUser, setMode)
   const { 
     handleSubmit, 
@@ -54,15 +59,37 @@ const ArticlePage = ({
   }
   const addTag = (value) => {
     const result = new Set([...tags.slice(0, -1), value, ''])
-    // console.log(Array.from(result))
     setTags(Array.from(result))
   }
 
-  const rulesInput = {
-    required: 'Поле обязталель но к заполнению'
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      history.push('/articles')
+    }
+  }, [isSuccess])
 
-  const onSubmit = (data) => console.log(data)
+  useEffect(() => {
+    if (isError) {
+      console.log(error)
+    }
+  }, [isError])
+
+  const onSubmit = async() => {
+    const lastItem = tags[tags.length - 1]
+    let tagsArr = tags
+    if (lastItem.trim().length === 0) {
+      tagsArr = tags.slice(0,-1)
+    } 
+    const result = {
+      "article": {
+        "title": title,
+        "description": description,
+        "body": text,
+        "tagList": tagsArr
+      }
+    }
+    await createArticle(result)
+  }
   
   return (
     <>
@@ -71,16 +98,17 @@ const ArticlePage = ({
         <ArticleTitle />           
         <ArticleInput
           control={control}
-          rules={rulesInput}
+          rules={rulesTitle}
           name='title'
           label='Title'
           placeholder='Text'
           value={title}
           onChangeInput={setTitle}
           // setValue={setTitle}
+          maxLength={128}
         />
         <ArticleInput
-          rules={rulesInput}
+          rules={rulesDescription}
           control={control}
           name='description'
           label='Short Descriptions'
@@ -88,9 +116,10 @@ const ArticlePage = ({
           value={description}
           onChangeInput={setDescription}
           // setValue={setValue}
+          maxLength={512}
         />
         <ArticleInput
-          rules={rulesInput}
+          rules={rulesText}
           control={control}
           name='text'
           label='Text'
@@ -101,7 +130,7 @@ const ArticlePage = ({
           // setValue={setValue}
         />
         <TagsBlock
-          // rules={rulesInput}
+          rules={rulesTags}
           name='tag'
           tags={tags} 
           // setTags={setTags}
@@ -109,10 +138,13 @@ const ArticlePage = ({
           onChangeInput={changeTag}
           onDeleteTag={deleteTag}
           onAddTag={addTag}
+          maxLength={50}
         />
         <BtnSend
-          type='submit'
-          isValid={isValid}
+          type='primary'
+          htmlType='submit'
+          disabled={!isValid}
+          // isValid={isValid}
         >Send</BtnSend>
       </ArticleForm>
     </>

@@ -45,6 +45,13 @@ export const blogApi = createApi({
         method: 'PUT',
         body
       })
+    }),
+    createArticle: build.mutation({
+      query: body => ({
+        url: 'articles',
+        method: 'POST',
+        body
+      })
     })
   })
 })
@@ -56,4 +63,5 @@ export const {
   useCreateAccountMutation,
   useGetAccountQuery,
   useUpdateAccountMutation,
+  useCreateArticleMutation,
 } = blogApi 

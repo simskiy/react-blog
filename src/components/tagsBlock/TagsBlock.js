@@ -12,7 +12,7 @@ const TagsBlock = (props) => {
     ...rest
   } = props
 
-  const {field, fieldState} = useController({
+  const {field} = useController({
     control,
     name,
     // rules,
@@ -21,7 +21,7 @@ const TagsBlock = (props) => {
   return (
     <div>
       <Title>Tags</Title>
-      <TagsWrapper {...rest}>
+      <TagsWrapper>
         {tags.map((item, ind) => (
           <Item key={ind}>
             <ArticleInput
@@ -34,6 +34,7 @@ const TagsBlock = (props) => {
                 field.onChange(e.target.value)
                 onChangeInput(e.target.value, ind)
               }}
+              {...rest}
             />
             {
               (ind > 0 || tags.length > 1) && <BtnDelete 
