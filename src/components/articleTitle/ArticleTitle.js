@@ -5,10 +5,10 @@ const TitleWrapper = styled.h1`
   ${titleArticle}
 `
 
-const ArticleTitle = () => {
+const ArticleTitle = ({title}) => {
   return (
     <TitleWrapper>
-      Create new article
+      {title}
     </TitleWrapper>
   ) 
 }

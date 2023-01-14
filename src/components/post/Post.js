@@ -2,9 +2,11 @@
 import styles from './post.module.scss';
 import ReactMarkdown from "react-markdown";
 import {format} from 'date-fns';
-import { Image } from 'antd';
+import { Button, Image } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import img from './NoImage.png'
+import useStorage from '../hooks/useStorage';
+import { setUser, setMode } from '../../redux/slice';
 
 const showOverview = (text, numWords) => {
   const textArr = text.split(' ')
@@ -22,6 +24,8 @@ const Post = ({post, showText=false}) => {
   const title = <h2 className={styles.title}>{post.title}</h2>
   const link = <Link  className={styles.link} to={`articles/${post.slug}`}>{title}</Link>
   
+  useStorage(setUser, setMode)
+
   return (
     <div className={styles.post}>
       <header className={styles.header}>
@@ -33,12 +37,28 @@ const Post = ({post, showText=false}) => {
       <ul className={styles.tags}>
           {post.tagList.map((item, ind) => (item && item.trim().length > 0 ? <li className={styles.tag} key={ind}>{item}</li> : null))}
       </ul>
-      <p className={styles.description}>{showOverview(post.description, 25)}</p>
+      <div className={styles.wrapperDescription}>
+        <p className={styles.description}>{showOverview(post.description, 25)}</p>
+        {
+        showText?
+          <div className={styles.btnBlock}>
+            <Button
+              onClick={widthEditArticlePage(Post, post)}>Delete</Button>
+            <Button>Edit</Button>
+          </div> :
+          null
+        }
+      </div>
       
       {showText?text:null}
       
     </div>
   )
+}
+
+const widthEditArticlePage = (Post, data) => {
+  console.log(Post)
+  console.log(data)
 }
 
 export function WithText (Component, props, displayName) {

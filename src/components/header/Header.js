@@ -28,7 +28,7 @@ const Header = ({history}) => {
 
   const loginButton = <Link key='login' to='/sign-in'><button className={styles.btn_login}>Sign In</button></Link>
   const createButton = <Link key='create' to='/sign-up'><button className={styles.btn_create}>Sign Up</button></Link>
-  const createArticle = <Link key='article' to='new-article'><button  className={styles.btn_article}>CreateArticle</button></Link>
+  const createArticle = <Link key='article' to='/new-article'><button  className={styles.btn_article}>CreateArticle</button></Link>
   const user = (<div className={styles.user} key='user'>
                   <Link to='/profile'>
                     <span className={styles.user_name}>{currentUser?.username}</span>

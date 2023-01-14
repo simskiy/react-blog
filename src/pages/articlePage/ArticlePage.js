@@ -29,22 +29,24 @@ const BtnSend = styled(Button)`
 `
 
 const ArticlePage = ({
-  // title='',
-  // description='',
-  // text='Привет от всех нас до всех вас',
+  initTitle=null,
+  initDescription=null,
+  initText=null,
   // mode='create'
+  initTags=[''],
   history
 }) => {
-  const tagsInit = ['hello', 'mother', 'fucker']
+  // const tagsInit = ['hello', 'mother', 'fucker']
 
-  const [title, setTitle] = useState(null)
-  const [description, setDescription] = useState(null)
-  const [text, setText] = useState(null)
-  const [tags, setTags] = useState(tagsInit)
+  const [title, setTitle] = useState(initTitle)
+  const [description, setDescription] = useState(initDescription)
+  const [text, setText] = useState(initText)
+  const [tags, setTags] = useState(initTags)
   const [createArticle, {isError, isSuccess, data, error}] = useCreateArticleMutation()
+  
   useStorage(setUser, setMode)
   const { 
-    handleSubmit, 
+    handleSubmit,                                                                                       
     control,
     formState,
   } = useForm({mode: 'onChange'})
@@ -54,9 +56,11 @@ const ArticlePage = ({
   const changeTag = (value, ind) => {
     setTags(tags.map((v, i) => i === ind ? value : v))
   }
+
   const deleteTag = (ind) => {
    setTags(tags.filter((_,i) => ind !== i))
   }
+
   const addTag = (value) => {
     const result = new Set([...tags.slice(0, -1), value, ''])
     setTags(Array.from(result))
@@ -66,12 +70,14 @@ const ArticlePage = ({
     if (isSuccess) {
       history.push('/articles')
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 
   useEffect(() => {
     if (isError) {
       console.log(error)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError])
 
   const onSubmit = async() => {

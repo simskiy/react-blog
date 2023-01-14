@@ -7,15 +7,16 @@
   margin: auto;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 635px 220px;
+  grid-template-columns: 635px 1fr;
   row-gap: 5px;
   grid-template-areas:
     "header author"
     "tags author"
-    "description author"
+    "description description"
     "text text";
   padding: 20px;
   background-color: #fff;
+  flex-grow: 1;
 }
 
 .header {
@@ -46,7 +47,7 @@
 .author {
   display: grid;
   grid-area: author;
-  grid-template-areas: "name img" "date img";
+  grid-template-areas: "name img" "date img" "btnDelete btnEdit";
   justify-items: end;
   align-content: center;
 
@@ -92,10 +93,14 @@
   }
 }
 
-.description {
+.wrapperDescription {
+  display: flex;
   grid-area: description;
-  font-size: 0.75rem;
+}
+
+.description {
   line-height: 22px;
+  font-size: 0.75rem;
   color: $text-color;
   margin: 0;
   margin-top: 15px;
@@ -107,4 +112,16 @@
   font-size: 20px;
   color: $text-color;
   overflow-wrap: anywhere;
+}
+
+.btnDelete {
+  grid-area: btnDelete;
+}
+
+.btnEdit {
+  grid-area: btnEdit;
+}
+
+.btnBlock {
+  margin-left: auto;
 }

@@ -5,7 +5,7 @@ import PostPage from '../../pages/postPage/PostPage';
 import CreateAccountPage from '../../pages/createAccountPage/CreateAccountPage';
 import LoginPage from '../../pages/loginPage/LoginPage';
 import EditProfilePage from '../../pages/editPrifilePage/EditProfilePage';
-import ArticlePage from '../../pages/articlePage/ArticlePage';
+import {CreateArticlePage} from '../../pages/CreateArticlePage/CreateArticlePage';
 
 function App() {
   // let data = null  
@@ -22,7 +22,7 @@ function App() {
         <Route path='/sign-up' component={CreateAccountPage} />
         <Route path='/sign-in' component={LoginPage} />
         <Route path='/profile' component={EditProfilePage} />
-        <Route path='/new-article' component={ArticlePage} />
+        <Route path='/new-article' component={CreateArticlePage} />
       </div>
     </Router>
   );

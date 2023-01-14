@@ -5,7 +5,7 @@ import { useGetArticleQuery } from "../../redux"
 
 const PostPage = ({slug}) => {
   const {data, isLoading} = useGetArticleQuery(slug)
-  const Content = isLoading ? () => (<h2>Loagind...</h2>) : WithText(Post, data.article, '111')
+  const Content = isLoading ? () => (<h2>Loagind...</h2>) : WithText(Post, data.article, 'post')
   return (
     <>
       <Header />
