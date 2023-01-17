@@ -2,13 +2,41 @@
 import styles from './post.module.scss';
 import ReactMarkdown from "react-markdown";
 import {format} from 'date-fns';
-import { Button, Image } from 'antd';
+import { Button, Image, Popover } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import img from './NoImage.png'
 import useStorage from '../hooks/useStorage';
 import { setUser, setMode } from '../../redux/slice';
 import { useDeleteArticleMutation, useSetFavoriteMutation, useDelFavoriteMutation } from '../../redux';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { useState } from 'react';
+
+const btn = `
+  cursor: pointer;
+  box-sizing: border-box;
+  font: inherit;
+  height: 24px;
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #595959;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+`
+const BtnNo = styled.button`
+  ${btn}
+  border-color: #D9D9D9;
+  background-color: white;
+  margin-left: auto;
+  margin-right: 8px;
+`
+const BtnYes = styled.button`
+  ${btn}
+  color: white;
+  background-color: #1890ff;
+`
 
 const showOverview = (text, numWords) => {
   const textArr = text.split(' ')
@@ -27,6 +55,7 @@ const Post = ({post, showText=false, history}) => {
   const link = <Link  className={styles.link} to={`articles/${post.slug}`}>{title}</Link>
   
   useStorage(setUser, setMode)
+  const [open, setOpen] = useState(false);
 
   const [deleteArticle] = useDeleteArticleMutation()
   const [setFavorite] = useSetFavoriteMutation()
@@ -41,6 +70,28 @@ const Post = ({post, showText=false, history}) => {
       await delFavorite(post.slug)
     }
   }
+
+  const btnDeleteContent = () => {
+    return (
+      <div className={styles.deleteBlock}>
+        <p className={styles.deleteText}>Are you sure to delete this article?</p>
+        <BtnNo className={styles.btnNo} onClick={hide}>No</BtnNo>
+        <BtnYes classname={styles.bntYes} 
+                onClick={() => {
+                  deleteArticle(post.slug)
+                  history.push('/articles')
+                }}>Yes</BtnYes>
+      </div>
+    )
+  }
+
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen);
+  };
+
+  const hide = () => {
+    setOpen(false);
+  };
 
   return (
     <div className={styles.post}>
@@ -63,17 +114,17 @@ const Post = ({post, showText=false, history}) => {
       <div className={styles.wrapperDescription}>
         <p className={styles.description}>{showOverview(post.description, 25)}</p>
         {
-        post.author.username === username?
+        post.author.username === username && showText?
           <div className={styles.btnBlock}>
-            <Button
-              onClick={() => {
-                deleteArticle(post.slug)
-                history.push('/articles')
-              }}
-            >Delete
-            </Button>
+            <Popover placement="rightBottom" content={btnDeleteContent} trigger="click" open={open} onOpenChange={handleOpenChange}>
+              <Button
+                className={styles.btnDelete}                
+              >Delete
+              </Button>
+            </Popover>
             
             <Button
+              className={styles.btnEdit}
               onClick={() => {
                 history.push(`/articles/${post.slug}/edit`)
               }}
@@ -117,3 +168,4 @@ const Author = (props) => {
 }
 
 export default withRouter(Post)
+

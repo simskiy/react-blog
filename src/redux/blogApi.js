@@ -25,6 +25,7 @@ export const blogApi = createApi({
       query: (slug) =>  {
         return `articles/${slug}`
       },
+      invalidatesTags: ['Post']
     }),
     loginAccount: build.mutation({
       query: (body) => ({
