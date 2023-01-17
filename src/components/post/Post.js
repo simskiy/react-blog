@@ -17,7 +17,7 @@ const showOverview = (text, numWords) => {
   return out
 }
 
-const Post = ({post, showText=false}) => {
+const Post = ({post, showText=false, history}) => {
   const text = <div className={styles.text}>
                  <ReactMarkdown children={post.body} />
                </div>
@@ -42,9 +42,13 @@ const Post = ({post, showText=false}) => {
         {
         showText?
           <div className={styles.btnBlock}>
+            <Button>Delete
+            </Button>
+            
             <Button
-              onClick={widthEditArticlePage(Post, post)}>Delete</Button>
-            <Button>Edit</Button>
+              onClick={() => history.push(`/articles/${post.slug}/edit`)}
+            >Edit</Button>
+            
           </div> :
           null
         }
@@ -54,11 +58,6 @@ const Post = ({post, showText=false}) => {
       
     </div>
   )
-}
-
-const widthEditArticlePage = (Post, data) => {
-  console.log(Post)
-  console.log(data)
 }
 
 export function WithText (Component, props, displayName) {

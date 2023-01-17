@@ -3,14 +3,14 @@ import { boxShadow, btnSend } from '../../styles/mixins'
 import Header from '../../components/header/Header'
 import ArticleTitle from '../../components/articleTitle/ArticleTitle'
 import ArticleInput from '../../components/articleInput/ArticleInput'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import TagsBlock from '../../components/tagsBlock/TagsBlock'
 import { setUser, setMode } from '../../redux/slice'
 import useStorage from '../../components/hooks/useStorage'
 import {useForm } from 'react-hook-form'
 import { rulesTitle, rulesDescription, rulesText, rulesTags } from './rules'
 import { Button } from 'antd'
-import { useCreateArticleMutation } from '../../redux'
+import { withRouter } from 'react-router-dom'
 
 const ArticleForm = styled.form`
   ${boxShadow}
@@ -29,20 +29,19 @@ const BtnSend = styled(Button)`
 `
 
 const ArticlePage = ({
-  initTitle=null,
-  initDescription=null,
-  initText=null,
+  title,
+  setTitle,
+  description,
+  setDescription,
+  text,
+  setText,
   // mode='create'
-  initTags=[''],
-  history
-}) => {
-  // const tagsInit = ['hello', 'mother', 'fucker']
-
-  const [title, setTitle] = useState(initTitle)
-  const [description, setDescription] = useState(initDescription)
-  const [text, setText] = useState(initText)
-  const [tags, setTags] = useState(initTags)
-  const [createArticle, {isError, isSuccess, data, error}] = useCreateArticleMutation()
+  tags,
+  setTags,
+  data,  
+  onSubmit,
+  history,
+}) => {  
   
   useStorage(setUser, setMode)
   const { 
@@ -67,35 +66,18 @@ const ArticlePage = ({
   }
 
   useEffect(() => {
-    if (isSuccess) {
+    if (data.isSuccess) {
       history.push('/articles')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess])
+  }, [data.isSuccess])
 
   useEffect(() => {
-    if (isError) {
-      console.log(error)
+    if (data.isError) {
+      console.log(data.error)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError])
-
-  const onSubmit = async() => {
-    const lastItem = tags[tags.length - 1]
-    let tagsArr = tags
-    if (lastItem.trim().length === 0) {
-      tagsArr = tags.slice(0,-1)
-    } 
-    const result = {
-      "article": {
-        "title": title,
-        "description": description,
-        "body": text,
-        "tagList": tagsArr
-      }
-    }
-    await createArticle(result)
-  }
+  }, [data.isError])
   
   return (
     <>
@@ -138,7 +120,7 @@ const ArticlePage = ({
         <TagsBlock
           rules={rulesTags}
           name='tag'
-          tags={tags} 
+          tags={tags = tags.length === 0 ? [''] : tags} 
           // setTags={setTags}
           control={control}
           onChangeInput={changeTag}
@@ -157,4 +139,4 @@ const ArticlePage = ({
   )
 }
 
-export default ArticlePage
+export default withRouter(ArticlePage)
