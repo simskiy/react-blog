@@ -4,7 +4,6 @@ import { useState } from 'react'
 import tagsTrim from '../articlePage/trimTags'
 
 export const CreateArticlePage = () => {
-
   
   const [createArticle, data] = useCreateArticleMutation()
  
@@ -13,7 +12,7 @@ export const CreateArticlePage = () => {
   const [text, setText] = useState(null)
   const [tags, setTags] = useState([''])
 
-  const onSubmit = async() => {    
+  const onSubmit = async() => {
     const result = {
       "article": {
         "title": title,

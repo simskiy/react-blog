@@ -38,9 +38,9 @@ export const rulesTitle = {
     // }
   }
 
-  export const rulesTags = {
-    pattern: {
-      value: /^[^\s].+[^\s]$/,
+  // export const rulesTags = {
+    // pattern: {
+    //   value: /^[^\s].+[^\s]$/,
       // message: 'нельзя начинать и заканчивать пробелом'
-    }
-  }
+    // }
+  // }

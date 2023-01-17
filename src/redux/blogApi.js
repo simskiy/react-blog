@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 export const blogApi = createApi({
   reducerPath: 'blogApi',
+  tagTypes: ['Post'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://blog.kata.academy/api/',
     prepareHeaders: (headers, {getState}) => {
@@ -15,6 +16,10 @@ export const blogApi = createApi({
   endpoints: (build) => ({
     getArticlesList: build.query({
       query: (offset) => `articles?limit=5&offset=${offset}`,
+      providesTags: (result, error, arg) => 
+        result
+          ? [...result.articles.map(({ id }) => ({ type: 'Post', id })), 'Post']
+          : ['Post'],
     }),
     getArticle: build.query({
       query: (slug) =>  `articles/${slug}`
@@ -51,7 +56,8 @@ export const blogApi = createApi({
         url: 'articles',
         method: 'POST',
         body
-      })
+      }),
+      invalidatesTags: ['Post']
     }),
     editArticle: build.mutation({
       query: (query) => {        
@@ -60,7 +66,17 @@ export const blogApi = createApi({
           method: 'PUT',
           body: query.body
         }
-      }        
+      },
+      invalidatesTags: ['Post']        
+    }),
+    deleteArticle: build.mutation({
+      query: (slug) => {
+        return {
+          url: `articles/${slug}`,
+          method: 'DELETE'
+        }
+      },
+      invalidatesTags: ['Post']
     })
   })
 })
@@ -73,5 +89,6 @@ export const {
   useGetAccountQuery,
   useUpdateAccountMutation,
   useCreateArticleMutation,
-  useEditArticleMutation
+  useEditArticleMutation,
+  useDeleteArticleMutation
 } = blogApi 

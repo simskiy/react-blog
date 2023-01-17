@@ -8,7 +8,7 @@ import TagsBlock from '../../components/tagsBlock/TagsBlock'
 import { setUser, setMode } from '../../redux/slice'
 import useStorage from '../../components/hooks/useStorage'
 import {useForm } from 'react-hook-form'
-import { rulesTitle, rulesDescription, rulesText, rulesTags } from './rules'
+import { rulesTitle, rulesDescription, rulesText } from './rules'
 import { Button } from 'antd'
 import { withRouter } from 'react-router-dom'
 
@@ -48,8 +48,9 @@ const ArticlePage = ({
     handleSubmit,                                                                                       
     control,
     formState,
+    setValue,
   } = useForm({mode: 'onChange'})
-  
+
   const isValid = formState.isValid
   
   const changeTag = (value, ind) => {
@@ -78,6 +79,13 @@ const ArticlePage = ({
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.isError])
+
+  useEffect(() => {
+    setValue('title', title)
+    setValue('description', description)
+    setValue('text', text)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   
   return (
     <>
@@ -118,7 +126,7 @@ const ArticlePage = ({
           // setValue={setValue}
         />
         <TagsBlock
-          rules={rulesTags}
+          // rules={rulesTags}
           name='tag'
           tags={tags = tags.length === 0 ? [''] : tags} 
           // setTags={setTags}

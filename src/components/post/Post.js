@@ -7,6 +7,7 @@ import { Link, withRouter } from 'react-router-dom';
 import img from './NoImage.png'
 import useStorage from '../hooks/useStorage';
 import { setUser, setMode } from '../../redux/slice';
+import { useDeleteArticleMutation } from '../../redux';
 
 const showOverview = (text, numWords) => {
   const textArr = text.split(' ')
@@ -26,6 +27,8 @@ const Post = ({post, showText=false, history}) => {
   
   useStorage(setUser, setMode)
 
+  const [deleteArticle] = useDeleteArticleMutation()
+
   return (
     <div className={styles.post}>
       <header className={styles.header}>
@@ -42,7 +45,12 @@ const Post = ({post, showText=false, history}) => {
         {
         showText?
           <div className={styles.btnBlock}>
-            <Button>Delete
+            <Button
+              onClick={() => {
+                deleteArticle(post.slug)
+                history.push('/articles')
+              }}
+            >Delete
             </Button>
             
             <Button

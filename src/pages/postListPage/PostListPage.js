@@ -5,8 +5,9 @@ import { withRouter } from "react-router-dom";
 import Header from "../../components/header/Header";
 import PostList from "../../components/postList/PostList";
 import styled from "styled-components";
-import {setUser, setMode} from '../../redux/slice'
+import {setUser, setMode, setPosts} from '../../redux/slice'
 import useStorage from "../../components/hooks/useStorage";
+import { useSelector, useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,7 +17,11 @@ const Wrapper = styled.div`
 function PostListPage({history, location}) {
   const [offset, setOffset] = useState(0)
   const [page, setPage] = useState(1)
-  const {data, isLoading, isError} = useGetArticlesListQuery(offset)
+  const {data, isLoading, isError, isSuccess} = useGetArticlesListQuery(offset)
+  // const posts = useSelector(state => state.reducer.posts)
+  // const dispatch = useDispatch()
+  
+  
   let content = isLoading ? <h2>Loading...</h2>: <PostList data={data} />
 
   useStorage(setUser, setMode)
@@ -26,7 +31,7 @@ function PostListPage({history, location}) {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
+
   if (isError) content = <h2>Error!!!</h2>
 
   return(

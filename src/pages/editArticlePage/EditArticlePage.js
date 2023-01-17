@@ -12,6 +12,7 @@ export const EditArticlePage = ({slug}) => {
   const [text, setText] = useState(data.article.body)
   const [tags, setTags] = useState(data.article.tagList)
 
+
   const onSubmit = async() => {
     const result = {
       body: {
@@ -19,14 +20,14 @@ export const EditArticlePage = ({slug}) => {
           "title": title,
           "description": description,
           "body": text,
-          "tagList": tagsTrim(tags)
+          "tagList": tags
         }
       },
       slug: slug       
     }
     await editArticle(result)
   }
-  
+
   return <ArticlePage
           title={title}
           setTitle={setTitle}
@@ -34,7 +35,7 @@ export const EditArticlePage = ({slug}) => {
           setDescription={setDescription}
           text={text}
           setText={setText}
-          tags={tags || [' ']}
+          tags={tagsTrim(tags) || [' ']}
           setTags={setTags}
           data={dataEditArticle}
           onSubmit={onSubmit}
