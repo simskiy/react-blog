@@ -29,14 +29,14 @@ const BtnSend = styled(Button)`
 `
 
 const ArticlePage = ({
-  title,
+  title = null,
   setTitle,
-  description,
+  description = null,
   setDescription,
-  text,
+  text = null,
   setText,
   // mode='create'
-  tags,
+  tags = [' '],
   setTags,
   data,  
   onSubmit,
@@ -52,7 +52,7 @@ const ArticlePage = ({
   } = useForm({mode: 'onChange'})
 
   const isValid = formState.isValid
-  
+
   const changeTag = (value, ind) => {
     setTags(tags.map((v, i) => i === ind ? value : v))
   }
@@ -128,7 +128,7 @@ const ArticlePage = ({
         <TagsBlock
           // rules={rulesTags}
           name='tag'
-          tags={tags = tags.length === 0 ? [''] : tags} 
+          tags={tags.length === 0 ? [' '] : tags} 
           // setTags={setTags}
           control={control}
           onChangeInput={changeTag}

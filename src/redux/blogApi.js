@@ -22,7 +22,9 @@ export const blogApi = createApi({
           : ['Post'],
     }),
     getArticle: build.query({
-      query: (slug) =>  `articles/${slug}`
+      query: (slug) =>  {
+        return `articles/${slug}`
+      },
     }),
     loginAccount: build.mutation({
       query: (body) => ({
@@ -49,7 +51,8 @@ export const blogApi = createApi({
         url: 'user',
         method: 'PUT',
         body
-      })
+      }),
+      invalidatesTags: ['Post']
     }),
     createArticle: build.mutation({
       query: body => ({
@@ -60,14 +63,14 @@ export const blogApi = createApi({
       invalidatesTags: ['Post']
     }),
     editArticle: build.mutation({
-      query: (query) => {        
+      query: (query) => {
         return {
           url: `articles/${query.slug}`,
           method: 'PUT',
           body: query.body
         }
       },
-      invalidatesTags: ['Post']        
+      invalidatesTags: ['Post']
     }),
     deleteArticle: build.mutation({
       query: (slug) => {

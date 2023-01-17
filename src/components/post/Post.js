@@ -8,6 +8,9 @@ import img from './NoImage.png'
 import useStorage from '../hooks/useStorage';
 import { setUser, setMode } from '../../redux/slice';
 import { useDeleteArticleMutation } from '../../redux';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { EditArticlePage } from '../../pages/editArticlePage/EditArticlePage';
 
 const showOverview = (text, numWords) => {
   const textArr = text.split(' ')
@@ -28,7 +31,8 @@ const Post = ({post, showText=false, history}) => {
   useStorage(setUser, setMode)
 
   const [deleteArticle] = useDeleteArticleMutation()
-
+  const username = useSelector(state => state?.reducer?.user?.username) || null
+ 
   return (
     <div className={styles.post}>
       <header className={styles.header}>
@@ -43,7 +47,7 @@ const Post = ({post, showText=false, history}) => {
       <div className={styles.wrapperDescription}>
         <p className={styles.description}>{showOverview(post.description, 25)}</p>
         {
-        showText?
+        post.author.username === username?
           <div className={styles.btnBlock}>
             <Button
               onClick={() => {
@@ -54,7 +58,9 @@ const Post = ({post, showText=false, history}) => {
             </Button>
             
             <Button
-              onClick={() => history.push(`/articles/${post.slug}/edit`)}
+              onClick={() => {
+                history.push(`/articles/${post.slug}/edit`)
+              }}
             >Edit</Button>
             
           </div> :

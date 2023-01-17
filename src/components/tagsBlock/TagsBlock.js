@@ -5,7 +5,7 @@ const TagsBlock = (props) => {
   const {
     control,
     name,
-    tags,
+    tags = [' '],
     onChangeInput,
     onDeleteTag,
     onAddTag,
@@ -17,7 +17,6 @@ const TagsBlock = (props) => {
     name,
     // rules,
   })
-
   return (
     <div>
       <Title>Tags</Title>

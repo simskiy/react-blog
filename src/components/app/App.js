@@ -22,7 +22,7 @@ function App() {
           render={({match}) => {
             const slug = match.params.slug
             return <PostPage slug={slug} />
-          }} />
+          }} />          
         <Route path='/sign-up' component={CreateAccountPage} />
         <Route path='/sign-in' component={LoginPage} />
         <Route path='/profile' component={EditProfilePage} />
