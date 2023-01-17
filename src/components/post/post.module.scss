@@ -30,14 +30,19 @@
     overflow: hidden;
   }
   & .like {
-    display: block;
+    display: flex;
     min-width: 35px;
     font-size: 0.75rem;
     text-align: right;
     color: $text-color;
     margin-left: 12px;
     font-weight: 400;
-    background: url("like.svg") left center/ 16px 14px no-repeat;
+    justify-content: space-around;
+    align-items: center;
+    // background: url("like.svg") left center/ 16px 14px no-repeat;
+    & .favorited {
+      stroke: red;
+    }
   }
   & .link {
     overflow: hidden;

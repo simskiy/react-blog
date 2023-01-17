@@ -80,6 +80,20 @@ export const blogApi = createApi({
         }
       },
       invalidatesTags: ['Post']
+    }),
+    setFavorite: build.mutation({
+      query: slug => ({
+        url: `articles/${slug}/favorite`,
+        method: 'POST'
+      }),
+      invalidatesTags: ['Post']
+    }),
+    delFavorite: build.mutation({
+      query: slug => ({
+        url: `articles/${slug}/favorite`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Post']
     })
   })
 })
@@ -93,5 +107,7 @@ export const {
   useUpdateAccountMutation,
   useCreateArticleMutation,
   useEditArticleMutation,
-  useDeleteArticleMutation
+  useDeleteArticleMutation,
+  useSetFavoriteMutation,
+  useDelFavoriteMutation
 } = blogApi 
