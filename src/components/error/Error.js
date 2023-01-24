@@ -1,14 +1,18 @@
-import { Result } from 'antd';
+import { Result, Button } from 'antd';
+import { withRouter } from 'react-router-dom';
 
-const Error = ({code, msg}) => {
+const Error = ({code, msg, history}) => {
   return (
     <Result
     status={code}
     title={code}
     subTitle={msg}
-    // extra={<Button type="primary">Back Home</Button>}
+    extra={<Button 
+      type="primary"
+      onClick={() => history.push('/articles')}
+    >Back Home</Button>}
   />
   )
 }
 
-export default Error
+export default withRouter(Error)
