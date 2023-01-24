@@ -13,22 +13,36 @@ const Wrapper = styled.div`
   justify-content: space-around;
 `
 
-function PostListPage({history, location}) {
+function PostListPage({history, location, curPage}) {
   const [offset, setOffset] = useState(0)
-  const [page, setPage] = useState(1)
-  const {data, isLoading, isError, isSuccess} = useGetArticlesListQuery(offset)
+  const [page, setPage] = useState(curPage)
+  const {data, isLoading, isError} = useGetArticlesListQuery(offset)
   
   let content = isLoading ? <h2>Loading...</h2>: <PostList data={data} />
 
   useStorage(setUser, setMode)
+
   useEffect(() => {
     if (location.pathname === '/') {
       history.push('/articles')
     }
+    setOffset((page - 1) * 5)
+    // setPage(getCurPage())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (isError) content = <h2>Error!!!</h2>
+  useEffect(() => {
+    history.push(`/articles?page=${page}`)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  console.log(page)
+  }, [page, history])
+
+  if (isError) content = <h2>Error!!!</h2>  
+
+  const onChange = (curPage) => {
+    setPage(curPage)
+    setOffset((curPage - 1)* 5) 
+  }
 
   return(
     <>
@@ -36,14 +50,12 @@ function PostListPage({history, location}) {
       {content}
       <Wrapper>
         <Pagination 
-          onChange={(curPage) => {
-            setPage(curPage)
-            setOffset((curPage - 1)* 5)            
-          }}
-          showSizeChanger={false}
-          current={page}
-          total={data?.articlesCount}
-        />
+            onChange={onChange}
+            showSizeChanger={false}
+            // current={page}
+            defaultCurrent={page}
+            total={data?.articlesCount}
+  />
       </Wrapper>
   </>
   )

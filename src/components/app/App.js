@@ -15,7 +15,13 @@ function App() {
       <div className={styles.app}>
         <Route  path='/' exact render={() => (<PostListPage />)} />
         
-        <Route path='/articles' exact render={() => (<PostListPage />)}/>
+        <Route path='/articles'  exact render={() => {
+          const params = window.location.search
+          const searchParams = new URLSearchParams(params.substring(params.indexOf('?')))
+          const curPage = searchParams.get('page')
+          return (<PostListPage 
+            curPage={curPage || 1}                                        
+          />)}}/>
         <Route 
           exact
           path='/articles/:slug' 

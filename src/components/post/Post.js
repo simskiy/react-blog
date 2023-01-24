@@ -7,7 +7,10 @@ import { Link, withRouter } from 'react-router-dom';
 import img from './NoImage.png'
 import useStorage from '../hooks/useStorage';
 import { setUser, setMode } from '../../redux/slice';
-import { useDeleteArticleMutation, useSetFavoriteMutation, useDelFavoriteMutation } from '../../redux';
+import { useDeleteArticleMutation, 
+         useSetFavoriteMutation, 
+         useDelFavoriteMutation,
+         useGetArticleQuery } from '../../redux';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -47,7 +50,7 @@ const showOverview = (text, numWords) => {
   return out
 }
 
-const Post = ({post, showText=false, history}) => {
+const Post = ({post, singlePost=false, history}) => {
   const text = <div className={styles.text}>
                  <ReactMarkdown children={post.body} />
                </div>
@@ -96,7 +99,7 @@ const Post = ({post, showText=false, history}) => {
   return (
     <div className={styles.post}>
       <header className={styles.header}>
-        {showText?title:link}
+        {singlePost?title:link}
         <div className={styles.like}
           onClick={isUser?favorCount:null}
           style={isUser? {cursor: 'pointer'}: null}
@@ -114,7 +117,7 @@ const Post = ({post, showText=false, history}) => {
       <div className={styles.wrapperDescription}>
         <p className={styles.description}>{showOverview(post.description, 25)}</p>
         {
-        post.author.username === username && showText?
+        post.author.username === username && singlePost?
           <div className={styles.btnBlock}>
             <Popover placement="rightBottom" content={btnDeleteContent} trigger="click" open={open} onOpenChange={handleOpenChange}>
               <Button
@@ -135,15 +138,15 @@ const Post = ({post, showText=false, history}) => {
         }
       </div>
       
-      {showText?text:null}
+      {singlePost?text:null}
       
     </div>
   )
 }
 
-export function WithText (Component, props, displayName) {
-  const WrappedComponent = () => {
-    return <Component post={props} showText={true} />
+export function SinglePost (Component, props, displayName) {  
+  const WrappedComponent = () => {    
+    return <Component post={props} singlePost={true} />
   }
   WrappedComponent.displayName = displayName
   return WrappedComponent

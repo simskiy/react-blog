@@ -41,7 +41,7 @@
     align-items: center;
     // background: url("like.svg") left center/ 16px 14px no-repeat;
     & .favorited {
-      stroke: red;
+      stroke: $info-color;
     }
   }
   & .link {

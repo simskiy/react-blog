@@ -32,7 +32,8 @@ export const blogApi = createApi({
         url: 'users/login',
         method: 'POST',
         body,
-      })
+      }),
+      invalidatesTags: ['Post']
     }),
     createAccount: build.mutation({
       query: (body) => ({

@@ -14,7 +14,7 @@ const PostList = ({data}) => {
             <Post post={item} />
           </List.Item>)  
         }} 
-      />
+      />    
   )
 }
 
