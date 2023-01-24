@@ -10,7 +10,7 @@ import { setUser, setMode } from '../../redux/slice';
 import { useDeleteArticleMutation, 
          useSetFavoriteMutation, 
          useDelFavoriteMutation,
-         useGetArticleQuery } from '../../redux';
+       } from '../../redux';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useState } from 'react';

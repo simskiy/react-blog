@@ -16,8 +16,9 @@ const Wrapper = styled.div`
 function PostListPage({history, location, curPage}) {
   const [offset, setOffset] = useState(0)
   const [page, setPage] = useState(curPage)
-  const {data, isLoading, isError} = useGetArticlesListQuery(offset)
+  const {data, isLoading, isError, isSuccess} = useGetArticlesListQuery(offset)
   
+  console.log(isSuccess)
   let content = isLoading ? <h2>Loading...</h2>: <PostList data={data} />
 
   useStorage(setUser, setMode)
@@ -34,7 +35,6 @@ function PostListPage({history, location, curPage}) {
   useEffect(() => {
     history.push(`/articles?page=${page}`)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  console.log(page)
   }, [page, history])
 
   if (isError) content = <h2>Error!!!</h2>  
@@ -43,22 +43,33 @@ function PostListPage({history, location, curPage}) {
     setPage(curPage)
     setOffset((curPage - 1)* 5) 
   }
-
+  const pagination = <Pagin 
+                      onChange={onChange}
+                      page={page}
+                      total={data?.articlesCount}
+                    />
+  const pagin = isSuccess?pagination:null
   return(
     <>
       <Header />
       {content}
       <Wrapper>
-        <Pagination 
-            onChange={onChange}
-            showSizeChanger={false}
-            // current={page}
-            defaultCurrent={page}
-            total={data?.articlesCount}
-  />
+      {pagin}  
       </Wrapper>
   </>
   )
 }
 
 export default withRouter(PostListPage)
+
+const Pagin = ({onChange, page, total}) => {
+  return (
+    <Pagination 
+        onChange={onChange}
+        showSizeChanger={false}
+        // current={page}
+        defaultCurrent={page}
+        total={total}
+    />
+  )
+}
