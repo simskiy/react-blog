@@ -71,8 +71,6 @@ const Post = ({post, singlePost=false, history}) => {
   const username = useSelector(state => state?.reducer?.user?.username) || null
   const isUser = useSelector(state => state.reducer?.mode === 'isUser')
 
-  console.log(post.favorited, like)
-
   const favorCount = async() => {
     setLike(!like)
     if (!like) {
