@@ -18,7 +18,6 @@ function PostListPage({history, location, curPage}) {
   const [page, setPage] = useState(curPage)
   const {data, isLoading, isError, isSuccess} = useGetArticlesListQuery(offset)
   
-  console.log(isSuccess)
   let content = isLoading ? <h2>Loading...</h2>: <PostList data={data} />
 
   useStorage(setUser, setMode)
